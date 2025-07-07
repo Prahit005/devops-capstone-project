@@ -12,6 +12,7 @@ from tests.factories import AccountFactory
 from service.common import status  # HTTP Status Codes
 from service.models import db, Account, init_db
 from service.routes import app
+from service import talisman
 
 DATABASE_URI = os.getenv(
     "DATABASE_URI", "postgresql://postgres:postgres@localhost:5432/postgres"
@@ -45,6 +46,7 @@ class TestAccountService(TestCase):
         db.session.commit()
 
         self.client = app.test_client()
+        talisman.force_https = False
 
     def tearDown(self):
         """Runs once after each test case"""
